@@ -11,8 +11,20 @@ class MusicaController extends Controller
    
     public function index()
     {
-        return Musica::all();
+        return response()->json(Musica::all());
     }
-
+    
+      public function store(Request $request)
+    {
+        try{
+           Musica::create($request->all());
+        }catch(\Exception $e){
+            return response()->json([
+                'success'=>false,
+                'error'=>$e->getMessage()
+            ],500);
+        }
+         
+    }
 
 }
