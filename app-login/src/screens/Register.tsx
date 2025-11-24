@@ -14,7 +14,7 @@ export default function RegisterScreen({ navigation }:any) {
       await register(name, email, password, confirm);
       navigation.replace('Home');
     } catch (err) {
-      //alert(err.response?.data?.message || 'Erro ao registrar');
+      alert(err.response?.data?.message || 'Erro ao registrar');
     }
   };
 
