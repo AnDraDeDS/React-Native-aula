@@ -39,22 +39,22 @@ export default function useAuth() {
   };
 
   const logout = async () => {
-    try {
-        const token = await AsyncStorage.getItem('token');
-        if (!token) throw new Error('Token não encontrado');
 
-        await api.post('/logout', {}, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-
-        await AsyncStorage.removeItem('token');
-        setUser(null);
-    } catch (err) {
-        console.error('Erro ao deslogar:', err);
-        throw err;
-    }
-};
-
+   try {
+          const token = await AsyncStorage.getItem('token');
+  
+          await api.post('/logout', {}, {
+              headers: { Authorization: `Bearer ${token}` },
+          });
+  
+          await AsyncStorage.removeItem('token');
+          setUser(null);
+      } catch (err) {
+          console.error('Erro ao deslogar:', err);
+          throw err;
+      }
+  };
+  
 
   return { user, register, login, getUser, logout };
 }
