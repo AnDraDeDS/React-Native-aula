@@ -3,45 +3,44 @@ import { View, Text, Button } from 'react-native';
 import useAuth from '../api/UserAuth';
 
 export default function HomeScreen({ navigation }: any) {
-  const { getUser, logout } = useAuth();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+    interface User {
+        id: number;
+        name: string;
+        email: string;
+    }
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await getUser();
-        console.log('Fetched user data in HomeScreen:', res.data);
-        setUser(res.data);
-      } catch {
+    const { getUser, logout } = useAuth();
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const userData = await getUser();
+                console.log('Fetched user:', userData.data);
+                setUser(userData.data);
+            } catch (error) {
+                console.error(error);
+                navigation.replace('Login');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUser();
+    }, []);
+
+    const handleLogout = async () => {
+        await logout();
         navigation.replace('Login');
-      } finally {
-        setLoading(false);
-      }
     };
-    fetchUser();
-    console.log('User state after fetch:', user);
-  }, []);
 
-  const handleLogout = async () => {
-    await logout();
-    navigation.replace('Login');
-  };
+    if (loading) return <Text>Carregando...</Text>;
 
-  if (loading) {
     return (
-      <View>
-        <Text>Carregando...</Text>
-      </View>
+        <View>
+            <Text>Bem-vindo, {user?.name || 'Usuário'}!</Text>
+            <Text>Email: {user?.email}</Text>
+            <Button title="Logout" onPress={handleLogout} />
+        </View>
     );
-  }
-
-  return (
-    <View>
-      <Text>Bem-vindo, {user?.name || 'Usuário'}!</Text>
-      <Text>Email: {user?.email}</Text>
-      <View style={{ marginTop: 20 }} />
-      <Button title="Logout" onPress={handleLogout} />
-    </View>
-  );
 }
