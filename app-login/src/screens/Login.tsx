@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import useAuth from '../api/UserAuth';
-// import styles from './LoginStyles';
+import {styles} from './LoginStyles';
 
 export default function LoginScreen({ navigation }: any) {
   const { login } = useAuth();
@@ -17,31 +17,35 @@ export default function LoginScreen({ navigation }: any) {
     }
   };
 
-  return (
-    <View>
-      <Text>Login</Text>
+ return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
 
       <TextInput
+        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
       />
 
       <TextInput
+        style={styles.input}
         placeholder="Senha"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
-
+      <View style={styles.button}>
       <Button title="Entrar" onPress={handleLogin} />
-
+</View>
       <View style={{ marginTop: 10 }} />
 
+    <View style={styles.button}>
       <Button
-        title="Registrar novo usuário"
+        title="Cadastrar"
         onPress={() => navigation.navigate('Register')}
       />
+      </View>
     </View>
   );
 }

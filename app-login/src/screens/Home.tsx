@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import useAuth from '../api/UserAuth';
+import {styles} from './HomeStyles'
 
 export default function HomeScreen({ navigation }: any) {
     interface User {
@@ -37,10 +38,15 @@ export default function HomeScreen({ navigation }: any) {
     if (loading) return <Text>Carregando...</Text>;
 
     return (
-        <View>
-            <Text>Bem-vindo, {user?.name || 'Usuário'}!</Text>
-            <Text>Email: {user?.email}</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Bem-vindo, {user?.name || 'Usuário'}!</Text>
+            <Text style={styles.subtitle}>Email: {user?.email}</Text>
+                  <View style={{ marginTop: 10 }} />
+
+            <View style={styles.button}>
             <Button title="Logout" onPress={handleLogout} />
+            </View>
         </View>
     );
 }
+

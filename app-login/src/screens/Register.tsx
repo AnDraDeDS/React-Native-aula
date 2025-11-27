@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import useAuth from '../api/UserAuth';
+import {styles} from './RegisterStyles'
+
 
 export default function RegisterScreen({ navigation }:any) {
   const { register } = useAuth();
@@ -18,16 +20,22 @@ export default function RegisterScreen({ navigation }:any) {
     }
   };
 
-  return (
-    <View>
-      <Text>Criar Conta</Text>
-      <TextInput placeholder="Nome" value={name} onChangeText={setName} />
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-      <TextInput placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} />
-      <TextInput placeholder="Confirme a senha" secureTextEntry value={confirm} onChangeText={setConfirm} />
+   return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Criar Conta</Text>
+
+      <TextInput style={styles.input} placeholder="Nome" value={name} onChangeText={setName} />
+      <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} />
+      <TextInput style={styles.input} placeholder="Senha" secureTextEntry value={password} onChangeText={setPassword} />
+      <TextInput style={styles.input} placeholder="Confirme a senha" secureTextEntry value={confirm} onChangeText={setConfirm} />
+
+<View style={styles.button}>
       <Button title="Registrar" onPress={handleRegister} />
+</View>
       <View style={{ marginTop: 10 }} />
-      <Button title="Voltar ao login" onPress={() => navigation.goBack()} />
+      <View style={styles.button}>
+      <Button  title="Voltar ao login" onPress={() => navigation.goBack()} />
+        </View>
     </View>
   );
 }
